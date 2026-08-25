@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # PostgreSQL kèm PostGIS mở rộng cho dữ liệu vị trí không gian địa lý
+  postgres:
+    image: postgis/postgis:16-3.4-alpine
+    container_name: swiftdrop-postgres
+    environment:
+      POSTGRES_DB: swiftdrop_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - swiftdrop-network
+
+  # Redis dùng cho caching, Redis GEO và Distributed Lock (Redisson)
+  redis:
+    image: redis:7-alpine
+    container_name: swiftdrop-redis
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    networks:
+      - swiftdrop-network
+
+  # RabbitMQ xử lý Message Queue bất đồng bộ
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: swiftdrop-rabbitmq
+    ports:
+      - "5672:5672"     # AMQP protocol
+      - "15672:15672"   # Management Dashboard UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - swiftdrop-network
+
+volumes:
+  postgres_data:
+  redis_data:
+  rabbitmq_data:
+
+networks:
+  swiftdrop-network:
+    driver: bridge

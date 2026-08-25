@@ -1,0 +1,36 @@
+# OS & IDEs
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml
+*.sublime-*
+
+# Environment & Secrets
+.env
+.env.local
+*.key
+*.pem
+credentials.json
+google-services.json
+GoogleService-Info.plist
+
+# Java / Spring Boot
+apps/backend/**/target/
+apps/backend/**/build/
+apps/backend/**/.gradle/
+apps/backend/**/out/
+apps/backend/**/*.class
+apps/backend/**/*.jar
+
+# Flutter / Dart
+apps/mobile/**/.dart_tool/
+apps/mobile/**/build/
+apps/mobile/**/.flutter-plugins
+apps/mobile/**/.flutter-plugins-dependencies
+apps/mobile/**/.packages
+apps/mobile/**/android/.gradle/
+apps/mobile/**/android/captures/
+apps/mobile/**/ios/Pods/
+apps/mobile/**/ios/.symlinks/
+apps/mobile/**/ios/Podfile.lock
