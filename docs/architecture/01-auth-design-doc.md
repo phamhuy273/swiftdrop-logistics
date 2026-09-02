@@ -42,8 +42,73 @@ erDiagram
 ```json
 {
   "email": "user@gmail.com",
-  "fullname": "user name",
+  "fullName": "user name",
   "password": "abcd123",
-  "phonenumber": "012345678"
+  "phoneNumber": "012345678"
+}
+```
+### Response
+* **1. Success(201)**
+```json
+{
+    "status": "success",
+    "status_code":201,
+    "data":{
+        "id":"001",
+        "fullName":"Name",
+        "email":"user@gmail.com",
+        "phoneNumber":"098765432",
+        "status":"active",
+        "createdAt":"2026-12-29T12:00:00Z"
+    }
+}
+```
+* **2.Error Validation failed(400)**
+```json
+{
+    "status":"error",
+    "statusCode":400,
+    "errorCode":"INVALID_INPUT",
+    "message":"Invalid request payload. Check input fields",
+    "details":[
+        {
+            "field": "fullName",
+            "issue":"Name is not null"
+        },
+
+        {
+            "field":"email",
+            "issue":"Email is required and must be a valid email address"
+        },
+
+        {
+            "field":"password",
+            "issue":"Password is required and must be atleast 8 characters"
+        },
+
+        {
+            "field":"phoneNumber",
+            "issue":"Phone number is required and must be atleast 10 digit-number"        
+        }
+    ]
+}
+```
+* **3. Conflict Information(409)**
+```json
+{
+    "status":"error",
+    "statusCode":409,
+    "errorCode":"EMAIL_ALREADY_EXISTS",
+    "message":"This email address is already registered",
+    "detail":[]
+}
+```
+```json
+{
+    "status":"error",
+    "statusCode":409,
+    "errorCode":"PHONE_NUMBER_ALREADY_EXISTS",
+    "message":"This phone number is already registered",
+    "detail":[]
 }
 ```
